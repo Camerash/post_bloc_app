@@ -1,4 +1,4 @@
-import 'package:post_repository/models/post.dart';
+import 'package:post_repository/post_repository.dart';
 import 'package:test/test.dart';
 
 void main() {
