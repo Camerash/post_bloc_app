@@ -17,7 +17,7 @@ class JsonPlaceholderApiClient {
   final http.Client _client;
 
   Future<List<JsonPlaceholderPost>> getPosts(int start, int limit) async {
-    final postsRequest = Uri.https(_baseUrl, "/posts", {"start": start.toString(), "limit": limit.toString()});
+    final postsRequest = Uri.https(_baseUrl, "/posts", {"_start": start.toString(), "_limit": limit.toString()});
     final postsResponse = await _client.get(postsRequest);
 
     if (postsResponse.statusCode != 200) {

@@ -1,7 +1,8 @@
-part of 'post_bloc.dart';
+part of 'post_cubit.dart';
 
-enum PostStatus { initial, success, failure }
+enum PostStatus { initial, loading, success, failure }
 
+@JsonSerializable()
 class PostState extends Equatable {
   PostState({
     this.status = PostStatus.initial,
