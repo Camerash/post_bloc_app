@@ -1,0 +1,6 @@
+{
+  "postListTitle": "Post List",
+  "@postListTitle": {
+    "description": "The title of the post list"
+  }
+}

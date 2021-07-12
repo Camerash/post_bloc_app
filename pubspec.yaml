@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   cupertino_icons: ^1.0.2
   flutter_bloc: ^7.0.1
   equatable: ^2.0.3
@@ -16,6 +18,7 @@ dependencies:
   json_annotation: ^4.0.0
   post_repository:
     path: packages/post_repository
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:
@@ -27,3 +30,4 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  generate: true
