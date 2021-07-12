@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:post_bloc_app/bloc/post_cubit.dart';
-import 'package:post_bloc_app/pages/post_list.dart';
+import 'package:post_bloc_app/posts/posts.dart';
 import 'package:post_repository/post_repository.dart';
 
 class PostApp extends StatelessWidget {
@@ -19,15 +18,7 @@ class PostApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: Scaffold(
-          appBar: AppBar(
-            title: Text('Infinite List'),
-          ),
-          body: BlocProvider(
-            create: (context) => PostCubit(context.read<PostRepository>()),
-            child: PostListPage(),
-          ),
-        ),
+        home: PostPage(),
       ),
     );
   }
