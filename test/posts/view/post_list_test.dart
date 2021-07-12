@@ -105,7 +105,6 @@ void main() {
         hasReachedMax: false,
       ));
       await tester.pumpPostList(postBloc);
-      await tester.pumpAndSettle();
       await tester.dragUntilVisible(
         find.byType(CircularProgressIndicator),
         find.byType(PostList),
