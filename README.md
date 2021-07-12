@@ -1,5 +1,8 @@
 # Post Bloc App
 
+[![Build Status](https://travis-ci.com/Camerash/post_bloc_app.svg?branch=master)](https://travis-ci.com/Camerash/post_bloc_app)
+[![Coverage Status](https://coveralls.io/repos/github/Camerash/post_bloc_app/badge.svg?branch=master)](https://coveralls.io/github/Camerash/post_bloc_app?branch=master)
+
 This application fetches posts from [JSONPlaceholder](https://jsonplaceholder.typicode.com) and display in a long scrolling list.
 
 It follows the BLoC architecture, which is officially recommended for writing Flutter applications.
