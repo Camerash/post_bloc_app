@@ -7,7 +7,9 @@ It follows the BLoC architecture, which is officially recommended for writing Fl
 This project's aim is to allow me to:
 - Revisit Flutter dev
 - Learn about BLoC hands on
-- Write test cases that aims for 100% code coverage
+- Implement localization using intl
+- Write test cases that aims for 100% code coverage, also integrates with coveralls
 - Refresh myself on CI/CD for Flutter
+- Run tests and build artifacts on Travis CI
 
 Following examples [here](https://bloclibrary.dev/#/flutterweathertutorial) and [here](https://bloclibrary.dev/#/flutterinfinitelisttutorial)

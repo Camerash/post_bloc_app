@@ -1,0 +1,88 @@
+# Env Var
+env:
+  global:
+    # Android
+    - API=28
+    - ANDROID_TOOLS=4333796 # android-28
+    # Flutter
+    - FLUTTER_CHANNEL=stable
+    # Path
+    - ANDROID_HOME=${HOME}/android-sdk-linux
+    - TOOLS=${ANDROID_HOME}/tools
+    - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
+    - JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+    - PATH="$JAVA_HOME/bin:$PATH"
+    - FLUTTER_HOME=${HOME}/flutter
+    - PATH=${HOME}/.pub-cache/bin:${PATH}
+    - PATH=${FLUTTER_HOME}/bin:${FLUTTER_HOME}/bin/cache/dart-sdk/bin:${PATH}
+# Default configurations for jobs
+language: generic
+os: linux
+dist: xenial
+addons:
+  apt:
+    packages:
+      - lib32stdc++6 # flutter dependency
+install:
+  - git -C ${HOME} clone https://github.com/flutter/flutter.git -b ${FLUTTER_CHANNEL} # Clone flutter to ${HOME}/flutter
+  - flutter doctor # Check flutter env
+  - gem install coveralls-lcov
+cache:
+  directories:
+    - ${HOME}/.pub-cache
+# Define out stages here
+stages:
+  - name: Tests
+  - name: Build
+    if: tag IS present
+# Define our jobs here
+jobs:
+  include:
+    # Test Job
+    - stage: "Tests"
+      name: "Unit and Widget Tests"
+      script:
+        - flutter test --coverage
+        - coveralls-lcov coverage/lcov.info
+    # Android Build Job
+    - stage: "Build"
+      name: "Build Android App Bundle"
+      cache:
+        directories:
+          - $HOME/.gradle/caches/
+          - $HOME/.gradle/wrapper/
+          - $HOME/.pub-cache
+          - flutter
+      before_cache:
+        - rm -rf $HOME/.gradle/caches/[1-9]*
+        - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+      addons:
+        apt:
+          packages:
+            - openjdk-8-jdk-headless
+      before_install:
+        # Android tools
+        - curl -L "https://dl.google.com/android/repository/sdk-tools-linux-$ANDROID_TOOLS.zip" -o $HOME/tools.zip
+        - unzip -oq $HOME/tools.zip -d ${ANDROID_HOME}
+
+        # Accept licenses before installing components, no need to echo y for each component
+        - yes | sdkmanager --licenses
+
+        # Download SDK tools
+        - sdkmanager "tools" >/dev/null
+        - sdkmanager "platform-tools" >/dev/null
+        - sdkmanager "platforms;android-$API" >/dev/null # We need the API of the emulator we will run
+        - sdkmanager "build-tools;28.0.3" >/dev/null # Implicit gradle dependency - gradle drives changes
+        - sdkmanager "platforms;android-28" >/dev/null # We need the API of the current compileSdkVersion from gradle.properties
+        - sdkmanager "extras;android;m2repository" >/dev/null
+      script:
+        - flutter build appbundle
+    # iOS Build Job
+    - name: "Build iOS Application Bundle"
+      # Override default config for MacOS build environment
+      os: osx
+      language: objective-c
+      osx_image: xcode12.5
+      script:
+        - flutter build ios --release --no-codesign
+
