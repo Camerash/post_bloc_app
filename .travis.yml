@@ -26,7 +26,6 @@ addons:
 install:
   - git -C ${HOME} clone https://github.com/flutter/flutter.git -b ${FLUTTER_CHANNEL} # Clone flutter to ${HOME}/flutter
   - flutter doctor # Check flutter env
-  - gem install coveralls-lcov
 cache:
   directories:
     - ${HOME}/.pub-cache
@@ -40,10 +39,21 @@ jobs:
   include:
     # Test Job
     - stage: "Tests"
-      name: "Unit and Widget Tests"
+      name: "Unit tests - JSONPlaceholder API"
       script:
-        - flutter test --coverage
-        - coveralls-lcov coverage/lcov.info
+        - cd packages/jsonplaceholder_api && flutter test --coverage
+      after_success:
+        - bash <(curl -s https://codecov.io/bash)
+    - name: "Unit tests - Post Repository"
+      script:
+        - cd packages/post_repository && flutter test --coverage
+      after_success:
+        - bash <(curl -s https://codecov.io/bash)
+    - name: "Unit and Widget Tests"
+      script:
+        - cd ${TRAVIS_BUILD_DIR} && flutter test --coverage
+      after_success:
+        - bash <(curl -s https://codecov.io/bash)
     # Android Build Job
     - stage: "Build"
       name: "Build Android App Bundle"
