@@ -1,7 +1,7 @@
 # Post Bloc App
 
 [![Build Status](https://travis-ci.com/Camerash/post_bloc_app.svg?branch=master)](https://travis-ci.com/Camerash/post_bloc_app)
-[![Coverage Status](https://coveralls.io/repos/github/Camerash/post_bloc_app/badge.svg?branch=master)](https://coveralls.io/github/Camerash/post_bloc_app?branch=master)
+[![codecov](https://codecov.io/gh/Camerash/post_bloc_app/branch/master/graph/badge.svg?token=1KJ54D8QR4)](https://codecov.io/gh/Camerash/post_bloc_app)
 
 This application fetches posts from [JSONPlaceholder](https://jsonplaceholder.typicode.com) and display in a long scrolling list.
 
