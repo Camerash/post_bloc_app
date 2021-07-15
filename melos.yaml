@@ -1,0 +1,20 @@
+name: post_bloc_app
+
+packages:
+  - packages/**
+  - '*'
+
+scripts:
+  generate-i10n:
+    run: melos exec -c 1 --file-exists="l10n.yaml" -- flutter gen-l10n
+    description: Build all localization files for Flutter packages in this project.
+
+  analyze: 
+    run: melos exec -- flutter analyze
+
+  check-formatting:
+    run: flutter format --set-exit-if-changed --dry-run .
+
+  test:
+    run: melos exec -c 1 --fail-fast --dir-exists="test" -- flutter test --coverage
+    description: Run all tests with coverage generated in respective directories

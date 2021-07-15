@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:post_repository/post_repository.dart';
 import 'package:rxdart/rxdart.dart';
 

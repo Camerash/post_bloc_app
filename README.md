@@ -11,7 +11,7 @@ This project's aim is to allow me to:
 - Revisit Flutter dev
 - Learn about BLoC hands on
 - Implement localization using intl
-- Write test cases that aims for 100% code coverage, also integrates with coveralls
+- Write test cases that aims for 100% code coverage, also integrates with codecov
 - Refresh myself on CI/CD for Flutter
 - Run tests and build artifacts on Travis CI
 

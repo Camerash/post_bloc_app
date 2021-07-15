@@ -2,7 +2,6 @@ part of 'post_bloc.dart';
 
 enum PostStatus { initial, success, failure }
 
-@JsonSerializable()
 class PostState extends Equatable {
   PostState({
     this.status = PostStatus.initial,
@@ -18,14 +17,15 @@ class PostState extends Equatable {
     PostStatus? status,
     List<Post>? posts,
     bool? hasReachedMax,
-  }) => PostState(
-    status: status ?? this.status,
-    posts: posts ?? this.posts,
-    hasReachedMax: hasReachedMax ?? this.hasReachedMax
-  );
+  }) =>
+      PostState(
+          status: status ?? this.status,
+          posts: posts ?? this.posts,
+          hasReachedMax: hasReachedMax ?? this.hasReachedMax);
 
   @override
-  String toString() => 'PostState { status: $status, posts: ${posts.length}, hasReachedMax: $hasReachedMax }';
+  String toString() =>
+      'PostState { status: $status, posts: ${posts.length}, hasReachedMax: $hasReachedMax }';
 
   @override
   List<Object> get props => [status, posts, hasReachedMax];

@@ -15,6 +15,7 @@ env:
     - FLUTTER_HOME=${HOME}/flutter
     - PATH=${HOME}/.pub-cache/bin:${PATH}
     - PATH=${FLUTTER_HOME}/bin:${FLUTTER_HOME}/bin/cache/dart-sdk/bin:${PATH}
+
 # Default configurations for jobs
 language: generic
 os: linux
@@ -26,37 +27,32 @@ addons:
 install:
   - git -C ${HOME} clone https://github.com/flutter/flutter.git -b ${FLUTTER_CHANNEL} # Clone flutter to ${HOME}/flutter
   - flutter doctor # Check flutter env
+  - dart pub global activate melos
 cache:
   directories:
     - ${HOME}/.pub-cache
+
 # Define out stages here
 stages:
   - name: Tests
   - name: Build
     if: tag IS present
+
 # Define our jobs here
 jobs:
   include:
     # Test Job
-    - stage: "Tests"
-      name: "Unit tests - JSONPlaceholder API"
+    - stage: Tests
+      name: Unit and Widget Tests
       script:
-        - cd packages/jsonplaceholder_api && flutter test --coverage
-      after_success:
-        - bash <(curl -s https://codecov.io/bash)
-    - name: "Unit tests - Post Repository"
-      script:
-        - cd packages/post_repository && flutter test --coverage
-      after_success:
-        - bash <(curl -s https://codecov.io/bash)
-    - name: "Unit and Widget Tests"
-      script:
-        - cd ${TRAVIS_BUILD_DIR} && flutter test --coverage
-      after_success:
-        - bash <(curl -s https://codecov.io/bash)
+        - melos run test
+      # Uncomment the following if using codecov
+    #      after_success:
+    #        - bash <(curl -s https://codecov.io/bash)
+
     # Android Build Job
-    - stage: "Build"
-      name: "Build Android App Bundle"
+    - stage: Build
+      name: Build Android App Bundle
       cache:
         directories:
           - $HOME/.gradle/caches/
@@ -87,8 +83,9 @@ jobs:
         - sdkmanager "extras;android;m2repository" >/dev/null
       script:
         - flutter build appbundle
+
     # iOS Build Job
-    - name: "Build iOS Application Bundle"
+    - name: Build iOS Application Bundle
       # Override default config for MacOS build environment
       os: osx
       language: objective-c
